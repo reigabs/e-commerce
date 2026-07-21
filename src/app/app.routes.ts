@@ -4,12 +4,12 @@ import { Carrinho } from './features/carrinho/carrinho/carrinho';
 
 //rota
 export const routes: Routes = [
-    {
+    
+];{
         path:'',
-        component: ListaProdutos
+        component: ListaProdutos,
     },
     {
         path:'carrinho',
-        component: Carrinho
+        component: Carrinho,
     }
-];
