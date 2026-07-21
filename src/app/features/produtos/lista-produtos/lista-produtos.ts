@@ -48,7 +48,7 @@ valorTotal = computed(() =>
     ]);
   }
   //! metodo para monitorar alterações em tempo real usando effect()
-  construtor() {
+  constructor() {
     effect(() => {
       console.log('Lista de Produtos Alterados: ',this.produtos());
     });
@@ -57,12 +57,26 @@ valorTotal = computed(() =>
     });
     effect(() => {
      if (typeof document !== 'undefined'){
-        document.title = `(${this.totalProdutos()}) - Loja do Gabs`;
+        document.title = `(${this.totalProdutos()}) -Loja do Gabs`;
       }
     });
   }
   //! Metodo para criar um estado de seleção com signal string | null
   produtoSelecionado = signal <string | null>(null); 
+//! metodo para criar um estado carrinho com signal
+carrinho = signal <{nome: string; preco: number}[]>([]);
+adicionarAoCarrinho(produto:{nome: string; preco: number}){
+  this.carrinho.update(listaAtual =>[
+    ...listaAtual, produto
+  ]);
+}
+//função que coloca a quantidade de todos os itens no carrinho usando o computed()
+quantidadeCarrinho = computed(() => this.carrinho().length);
+//função que coloca o valor de todos os itens no carrinho usando o computed()
+valorCarrinho = computed(() =>
+{return this.carrinho().reduce((total, item) =>
+  total + item.preco,0
+)});
 }
 
 
