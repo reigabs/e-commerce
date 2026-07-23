@@ -1,15 +1,28 @@
 import { Routes } from '@angular/router';
-import { ListaProdutos } from './features/produtos/lista-produtos/lista-produtos';
-import { Carrinho } from './features/carrinho/carrinho/carrinho';
+import { authGuard } from './core/auth.guard';
 
-//rota
 export const routes: Routes = [
-    
-];{
-        path:'',
-        component: ListaProdutos,
+    {
+        path: '', //! router para raiz localhost:4200/
+        loadComponent: () =>
+            import('./features/home/home/home')
+        .then((m) => m.Home),
     },
     {
-        path:'carrinho',
-        component: Carrinho,
-    }
+        path: 'produtos', //! router para produtos localhost:4200/
+        loadComponent: () =>
+            import('./features/produtos/lista-produtos/lista-produtos')
+        .then((m) => m.ListaProdutos),
+    },
+    {
+        path: 'carrinho', //! router para carrinho localhost:4200/
+        canActivate: [authGuard], //! guard para verificar se o usuário está logado antes de acessar a rota
+        loadComponent: () =>
+            import('./features/carrinho/carrinho/carrinho')
+        .then((m) => m.Carrinho),
+    },
+    {
+        path: '**',    //! router para qualquer outra rota que não seja as definidas acima, redirecionando para a raiz localhost:4200/
+        redirectTo: '/',
+    },
+];
