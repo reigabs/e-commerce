@@ -5,6 +5,8 @@ import { computed } from '@angular/core'
 import { PrecoFormatadoPipe } from '../../../shared/pipes/preco-formatado-pipe';
 import { effect } from '@angular/core';
 import { UpperCasePipe } from '@angular/common';
+import { inject } from '@angular/core';
+import { produtosService } from '../produtos.service';
 
 @Component({
   selector: 'app-lista-produtos',
@@ -13,13 +15,13 @@ import { UpperCasePipe } from '@angular/common';
   styleUrl: './lista-produtos.css',
 })
 export class ListaProdutos {
+
+  //?==================== SIGNAL ========================
+
  //lista de dados - Array
-  produtos = signal([
-    {nome:'Teclado Indiano', preco:49.99},
-    {nome:'Mouse da shoppe', preco:100.99},
-    {nome:'Paulo', preco:0},
-    {nome:'Monitor Gamer', preco:150.99},
-  ]);
+  produtos = signal<{nome: string; preco: number}[]>([]);
+  carregando = signal(true);
+
   //! Função para exibir produtos selecionados pelo usuário no console
  exibirProduto(nome: string){
   console.log('Produto Selecionado:', nome);
@@ -32,6 +34,9 @@ adicionarProduto(){
     {nome:'Playstation 5', preco:3000},
   ]);
 }
+
+//?==================== COMPUTED ========================
+
 //!função que contabiliza a quantidade de produtos na lista usando o computed()
 totalProdutos = computed(() => this.produtos().length);
 //função que coloca o valor total usando o computed()
@@ -47,8 +52,12 @@ valorTotal = computed(() =>
       {nome: 'Monitor Gamer', preco:150 },
     ]);
   }
+
+  //?==================== CONSTRUCTOR ========================
+
   //! metodo para monitorar alterações em tempo real usando effect()
-  constructor() {
+  constructor( ) {
+    this.carregarProdutos();
     effect(() => {
       console.log('Lista de Produtos Alterados: ',this.produtos());
     });
@@ -77,6 +86,23 @@ valorCarrinho = computed(() =>
 {return this.carrinho().reduce((total, item) =>
   total + item.preco,0
 )});
+
+//? ================ metodo para client 
+
+carregarProdutos(){
+  this.carregando.set(true);
+  this.produtosService.buscarProdutos().subscribe({
+    next: (dados) => {
+      const produtos = this.produtosService.transformarProduto(dados);
+      this.produtos.set(produtos);
+      this.carregando.set(false);
+    },
+    error: (erro) => {
+      console.error('Erro ao carregar produtos: ', erro);
+      this.carregando.set(false);
+    }
+  });
 }
+private produtosService = inject(produtosService);
 
-
+}
