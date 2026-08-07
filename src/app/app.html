@@ -1,10 +1,16 @@
 <!--apaga templete nativo angular cli,adicionando superteg app-produto para adicionar informações do produto.html-->
 <app-header></app-header>
-<hr /> 
+
+<main class="container-principal">
+<section class="bloco-controle">
+
 <button mat-raised-button color="primary" (click)="login()">Login</button>
-<button mat-stroked-button color="warn" (click)="logout()">Logout</button>
-<p>Status {{ usuarioLogado() ? 'Logado' : 'Deslogado' }}</p>
-<hr>
-    <router-outlet></router-outlet>
+<button mat-stroked-button color ="warn" (click)="logout()">Logout</button>
+<p> Status {{usuarioLogado() ? 'Logado' : 'Deslogado'}}</p>
+
+</section>
+<router-outlet></router-outlet>
+
+</main>
 
     
