@@ -41,8 +41,10 @@
          <button (click)="carregarProdutos()"> Tente novamente</button>
 }
   @if(!carregando() && !erro()){
-    <p><strong>Quantidade de produtos:</strong> {{totalProdutos() }}</p>
-    <hr>
+    <p><strong>Quantidade de produtos</strong>: {{totalProdutos()}}</p>
+  }
+    <section class="grid-produtos">
+    
     @for(item of produtos(); track $index){
         <app-produto
         [nome]="item.nome"
@@ -53,14 +55,15 @@
     </app-produto>
   }
   
-}
+  </section>
+
 
 <!--carrinho-->
 <hr>
 <h2>Carrinho</h2>
-@for(item of carrinho(); track $index){
+@for(item of carrinhoService.itens(); track $index){
     <p>{{item.nome}} - {{item.preco | precoFormatado}}</p>
 }
 <hr>
-<p><strong>Quantidade no Carrinho: </strong>{{quantidadeCarrinho()}}</p>
-<p><strong>Valor Total: do carrinho </strong>{{valorCarrinho() | precoFormatado}}</p>
+<p><strong>Quantidade no Carrinho: </strong>{{carrinhoService.quantidadeItens()}}</p>
+<p><strong>Valor Total: do carrinho </strong>{{carrinhoService.totalItens() | precoFormatado}}</p>
