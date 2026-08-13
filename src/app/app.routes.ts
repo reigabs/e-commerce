@@ -22,10 +22,15 @@ export const routes: Routes = [
         .then((m) => m.Carrinho),
     },
     {
-        path:'checkout',
-        loadComponent: () =>
-            import('./features/checkout/checkout/checkout').then((m)=> m.Checkout),
-    },
+        // Checkout protegido
+        path: 'checkout',
+        canActivate: [authGuard],
+        loadComponent: () => import('./features/checkout/checkout/checkout').then((m) => m.Checkout),
+},
+    {
+path: 'login',
+loadComponent: () => import('./features/login/login/login').then((m) => m.Login),
+},
     {
         path: '**',    //! router para qualquer outra rota que não seja as definidas acima, redirecionando para a raiz localhost:4200/
         redirectTo: '/',
