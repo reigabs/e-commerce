@@ -15,9 +15,30 @@
 
 
     <p><input type="email" formControlName= "email" placeHolder="Digite seu E-mail"></p>
+    @if (formulario.get('email')?.touched && formulario.get('email')?.invalid) {
+@if (formulario.get('email')?.errors?.['required']) {
+<small>Email é obrigatório</small>
+}
+@if (formulario.get('email')?.errors?.['email']) {
+<small>Email inválido</small>
+}
+    }
 
     <p><input type="text" formControlName= "endereco" placeHolder="Digite seu Endereço"></p>
+    @if (formulario.get('endereco')?.touched && formulario.get('endereco')?.invalid) {
+@if (formulario.get('endereco')?.errors?.['required']) {
+<small>Endereço é obrigatório</small>
+}
+@if (formulario.get('endereco')?.errors?.['minlength']) {
+<small>Endereço deve ter no mínimo 5 caracteres</small>
+}
+}
 
-<button type="button" (click)="finalizar()">Finalizar Compra</button>
+
+<p>
+<button type="button" (click)="finalizar()" [disabled]="formulario.invalid">
+Finalizar Compra
+</button>
+</p>
 
 </form> 
