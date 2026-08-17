@@ -1,38 +1,36 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './core/auth.guard';
-
+import { AuthService } from './core/auth.guard';
+import { adminGuard } from './core/admin.guard';
 export const routes: Routes = [
-    {
-        path: '', //! router para raiz localhost:4200/
-        loadComponent: () =>
-            import('./features/home/home/home')
-        .then((m) => m.Home),
-    },
-    {
-        path: 'produtos', //! router para produtos localhost:4200/
-        loadComponent: () =>
-            import('./features/produtos/lista-produtos/lista-produtos')
-        .then((m) => m.ListaProdutos),
-    },
-    {
-        path: 'carrinho', //! router para carrinho localhost:4200/
-        canActivate: [authGuard], //! guard para verificar se o usuário está logado antes de acessar a rota
-        loadComponent: () =>
-            import('./features/carrinho/carrinho/carrinho')
-        .then((m) => m.Carrinho),
-    },
-    {
-        // Checkout protegido
-        path: 'checkout',
-        canActivate: [authGuard],
-        loadComponent: () => import('./features/checkout/checkout/checkout').then((m) => m.Checkout),
+{
+path: '',
+loadComponent: () => import('./features/home/home/home').then((m) => m.Home),
 },
-    {
+{
+path: 'produtos',
+loadComponent: () => import('./features/produtos/lista-produtos/lista-produtos').then((m) => m.ListaProdutos),
+},
+{
+path: 'carrinho',
+canActivate: [AuthService],
+loadComponent: () => import('./features/carrinho/carrinho/carrinho').then((m) => m.Carrinho),
+},
+{
+path: 'checkout',
+canActivate: [AuthService],
+loadComponent: () => import('./features/checkout/checkout/checkout').then((m) => m.Checkout),
+},
+{
+path: 'admin',
+canActivate: [adminGuard],
+loadComponent: () => import('./features/admin/admin/admin').then((m) => m.Admin),
+},
+{
 path: 'login',
 loadComponent: () => import('./features/login/login/login').then((m) => m.Login),
 },
-    {
-        path: '**',    //! router para qualquer outra rota que não seja as definidas acima, redirecionando para a raiz localhost:4200/
-        redirectTo: '/',
-    },
+{
+path: '**',
+redirectTo: '',
+},
 ];
