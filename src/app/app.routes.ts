@@ -30,6 +30,10 @@ path: 'login',
 loadComponent: () => import('./features/login/login/login').then((m) => m.Login),
 },
 {
+    path: 'acesso-negado',
+    loadComponent: () => import('./features/acesso-negado/acesso-negado/acesso-negado').then((m) => m.AcessoNegado),
+},
+{
 path: '**',
 redirectTo: '',
 },
