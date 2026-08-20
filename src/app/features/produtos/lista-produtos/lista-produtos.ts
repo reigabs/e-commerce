@@ -8,6 +8,7 @@ import { UpperCasePipe } from '@angular/common';
 import { inject } from '@angular/core';
 import { produtosService } from '../../../core/services/produtos.service';
 import { CarrinhoService } from '../../../core/services/carrinho.service';
+import { CarrinhoFacade } from '../../../core/facades/carrinho.facades';
 
 @Component({
   selector: 'app-lista-produtos',
@@ -77,7 +78,8 @@ valorTotal = computed(() =>
 //! metodo para criar um estado carrinho com signal
 
 adicionarAoCarrinho(produto:{nome: string; preco: number}){
-  this.carrinhoService.adicionar(produto);
+ this.carrinhoFacade.adicionarProduto(produto);
+
 }
 //função que coloca a quantidade de todos os itens no carrinho usando o computed()
 
@@ -106,8 +108,9 @@ carregarProdutos(){
 //* ==================== iNJECT =========================
 private produtosService = inject(produtosService);
 public carrinhoService = inject(CarrinhoService);
+carrinhoFacade = inject(CarrinhoFacade);
+quantidadeCarrinho = this.carrinhoFacade.quantidade;
+totalCarrinho = this.carrinhoFacade.total;
 
-quantidadeCarrinho = this.carrinhoService.quantidadeItens;
-totalCarrinho = this.carrinhoService.totalItens;
 
 }
