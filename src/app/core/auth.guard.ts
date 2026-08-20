@@ -1,4 +1,6 @@
 import { Injectable, computed, signal } from '@angular/core';
+
+import { AuthFacade } from './facades/auth.facades';
 type PerfilUsuario = 'usuario' | 'admin';
 type Usuario = {
 email: string;
@@ -8,6 +10,7 @@ perfil: PerfilUsuario;
 providedIn: 'root',
 })
 export class AuthService {
+    
 private usuario = signal<Usuario | null>(null);
 private tokenJwt = signal<string | null>(null);
 usuarioAtual = computed(() => this.usuario());
