@@ -3,11 +3,13 @@ import { HttpInterceptorFn } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { tap, catchError, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { AuthFacade } from '../facades/auth.facades';
+
 export const httpInterceptor: HttpInterceptorFn = (req, next) => {
-const authService = inject(AuthService);
+const authFacade = inject(AuthFacade);
 // Router usado p redirecionamentos em erros de autenticação/autorização.
 const router = inject(Router);
-const token = authService.obterToken();
+const token = authFacade.obterToken();
 console.log('REQUEST', req.url);
 
 const novaReq = token
@@ -27,7 +29,7 @@ console.error('ERRO GLOBAL:', error);
 // 401 -> ausência de autenticação ou token inválido.
 if (error.status === 401) {
 console.warn('Não autorizado. Faça login novamente.');
-authService.logout();
+authFacade.sair();
 router.navigateByUrl('/login');
 }
 // 403 -> usuario autenticado, mas sem permissão.
