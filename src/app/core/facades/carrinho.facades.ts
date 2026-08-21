@@ -11,9 +11,9 @@ export class CarrinhoFacade {
 // evitando que as telas dependam diretamente dos detalhes internos do service.
 private carrinhoService = inject(CarrinhoService);
 // Sinais expostos para leitura pelas telas.
-itens = this.carrinhoService.itens;
-quantidade = this.carrinhoService.quantidadeItens;
-total = this.carrinhoService.totalItens;
+Itens = this.carrinhoService.itens;
+quantidade = this.carrinhoService.quantidade;
+total = this.carrinhoService.total;
 carrinhoVazio = this.carrinhoService.carrinhoVazio;
 
 // Ação de alto nível para adicionar produto.
