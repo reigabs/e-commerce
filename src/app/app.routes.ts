@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { AuthService } from './core/auth.guard';
+import { authGuard } from './core/auth.guard';
 import { adminGuard } from './core/admin.guard';
 export const routes: Routes = [
 {
@@ -12,12 +12,12 @@ loadComponent: () => import('./features/produtos/lista-produtos/lista-produtos')
 },
 {
 path: 'carrinho',
-canActivate: [AuthService],
+
 loadComponent: () => import('./features/carrinho/carrinho/carrinho').then((m) => m.Carrinho),
 },
 {
 path: 'checkout',
-canActivate: [AuthService],
+canActivate: [authGuard],
 loadComponent: () => import('./features/checkout/checkout/checkout').then((m) => m.Checkout),
 },
 {
