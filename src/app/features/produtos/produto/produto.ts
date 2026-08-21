@@ -3,6 +3,7 @@ import{UpperCasePipe, CurrencyPipe } from '@angular/common';
 import { PrecoFormatadoPipe } from '../../../shared/pipes/preco-formatado-pipe';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule} from '@angular/material/card';
+import { ItemCarrinho } from '../../../core/models/item-carrinho';
 
 
 @Component({
@@ -18,13 +19,12 @@ export class Produto {
   @Input() preco: number = 0;
 //saida de dados de produtos selecionados da lista produtos
   @Output() produtoSelecionado = new EventEmitter<string>();
+
+  // O evento agora usa o tipo compartilhado ItemCarrinho.
+@Output() produtoAdicionado = new EventEmitter<ItemCarrinho>(); 
   selecionarProduto() {
     this.produtoSelecionado.emit(this.nome);
   }
-  @Output() produtoAdicionado = new EventEmitter<{
-    nome: string;
-    preco: number;
-  }>();
 
   adicionarAocarrinho() {
     this.produtoAdicionado.emit({

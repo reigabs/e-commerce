@@ -9,6 +9,7 @@ import { inject } from '@angular/core';
 import { produtosService } from '../../../core/services/produtos.service';
 import { CarrinhoService } from '../../../core/services/carrinho.service';
 import { CarrinhoFacade } from '../../../core/facades/carrinho.facades';
+import { ItemCarrinho } from '../../../core/models/item-carrinho';
 
 @Component({
   selector: 'app-lista-produtos',
@@ -77,7 +78,7 @@ valorTotal = computed(() =>
   produtoSelecionado = signal <string | null>(null); 
 //! metodo para criar um estado carrinho com signal
 
-adicionarAoCarrinho(produto:{nome: string; preco: number}){
+adicionarAoCarrinho(produto: ItemCarrinho){
  this.carrinhoFacade.adicionarProduto(produto);
 
 }
@@ -107,7 +108,6 @@ carregarProdutos(){
 
 //* ==================== iNJECT =========================
 private produtosService = inject(produtosService);
-public carrinhoService = inject(CarrinhoService);
 carrinhoFacade = inject(CarrinhoFacade);
 quantidadeCarrinho = this.carrinhoFacade.quantidade;
 totalCarrinho = this.carrinhoFacade.total;
