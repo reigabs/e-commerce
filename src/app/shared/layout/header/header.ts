@@ -27,7 +27,7 @@ private authFacade = inject(AuthFacade);
   estaLogado = this.authFacade.estaLogado;
 usuarioAtual = this.authFacade.usuarioAtual;
 
-  quantidadeHeader = this.carrinhoService.quantidadeItens;
+  quantidadeHeader = this.carrinhoService.quantidade;
 sair() {
   this.authFacade.sair();
 this.authService.logout();
