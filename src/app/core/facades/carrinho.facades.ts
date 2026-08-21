@@ -1,10 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { CarrinhoService } from '../services/carrinho.service';
-
-type ItemCarrinho = {
-nome: string;
-preco: number;
-};
+import { ItemCarrinho } from '../models/item-carrinho';
 
 @Injectable({
 providedIn: 'root',
@@ -19,9 +15,15 @@ itens = this.carrinhoService.itens;
 quantidade = this.carrinhoService.quantidadeItens;
 total = this.carrinhoService.totalItens;
 carrinhoVazio = this.carrinhoService.carrinhoVazio;
-// Ação de alto nível para adicionar produto ao carrinho.
+
+// Ação de alto nível para adicionar produto.
 adicionarProduto(produto: ItemCarrinho) {
 this.carrinhoService.adicionar(produto);
+}
+
+// Ação de alto nível para remover item.
+removerItem(indice: number) {
+this.carrinhoService.removerPorIndice(indice);
 }
 // Ação de alto nível para limpar o carrinho.
 limparCarrinho() {
